@@ -1,21 +1,21 @@
 package groupId;
 
+
 import com.google.gson.Gson;
 import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
+import jdbc.RolesJdbc;
 import jdbc.UserJdbc;
+import model.Role;
 import model.User;
-import utils.request.addUserRequest;
-import utils.request.deleteUserRequest;
-import utils.request.updateUserRequest;
+import utils.request.*;
 import utils.response.mainResponse;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
-@Path("users")
-public class MyResource {
+@Path("roles")
+public class RoleJaxRs {
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
@@ -23,18 +23,17 @@ public class MyResource {
         return "Got it!";
     }
 
-
     @GET
     @Path("all")
     @Produces("application/json")
-    public Response getUsers() {
+    public Response getRoles() {
         mainResponse mainResponse = new mainResponse();
 
         Gson gson = new Gson();
 
-        String selectSQL = "select * from users";
+        String selectSQL = "select * from roles";
         mainResponse.isSuccess = true;
-        mainResponse.body = UserJdbc.getUsers(selectSQL);
+        mainResponse.body = RolesJdbc.getRoles(selectSQL);
 
         return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).build();
     }
@@ -42,20 +41,18 @@ public class MyResource {
     @POST
     @Path("add")
     @Produces("application/json")
-    public Response addUser(String body) throws MessagingException {
+    public Response addRole(String body) throws MessagingException {
         mainResponse mainResponse = new mainResponse();
 
         Gson gson = new Gson();
-        addUserRequest addUserRequest = gson.fromJson(body, addUserRequest.class);
+        addRoleRequest addRoleRequest = gson.fromJson(body, addRoleRequest.class);
 
-        User user = new User();
-        user.firstName = addUserRequest.firstName;
-        user.contactNumber = addUserRequest.contactNumber;
+        Role role = new Role();
+        role.role = addRoleRequest.role;
 
-
-        if (UserJdbc.addUser(user)) {
-                mainResponse.body="completed";
-                mainResponse.isSuccess=true;
+        if (RolesJdbc.addRole(role)) {
+            mainResponse.body="completed";
+            mainResponse.isSuccess=true;
         } else {
             return Response.notAcceptable(null).build();
         }
@@ -66,12 +63,12 @@ public class MyResource {
     @DELETE
     @Path("delete")
     @Produces("application/json")
-    public Response deleteUser(String body) throws MessagingException {
+    public Response deleteRole(String body) throws MessagingException {
         mainResponse mainResponse = new mainResponse();
 
         Gson gson = new Gson();
-        deleteUserRequest deleteUserRequest = gson.fromJson(body, deleteUserRequest.class);
-        if (UserJdbc.deleteUser(deleteUserRequest.id)) {
+        deleteRoleRequest deleteRoleRequest = gson.fromJson(body, deleteRoleRequest.class);
+        if (RolesJdbc.deleteRole(deleteRoleRequest.id)) {
             mainResponse.body="completed";
             mainResponse.isSuccess=true;
         } else {
@@ -84,18 +81,17 @@ public class MyResource {
     @PUT
     @Path("update")
     @Produces("application/json")
-    public Response updateUser(String body) throws MessagingException {
+    public Response updateRole(String body) throws MessagingException {
         mainResponse mainResponse = new mainResponse();
 
         Gson gson = new Gson();
-        updateUserRequest updateUserRequest = gson.fromJson(body, updateUserRequest.class);
+        updateRoleRequest updateRoleRequest = gson.fromJson(body, updateRoleRequest.class);
 
-        User user = new User();
-        user.id = updateUserRequest.id;
-        user.firstName = updateUserRequest.firstName;
-        user.contactNumber = updateUserRequest.contactNumber;
+        Role role = new Role();
+        role.id = updateRoleRequest.id;
+        role.role = updateRoleRequest.role;
 
-        if (UserJdbc.updateUser(user)) {
+        if (RolesJdbc.updateRole(role)) {
             mainResponse.body="completed";
             mainResponse.isSuccess=true;
         } else {
