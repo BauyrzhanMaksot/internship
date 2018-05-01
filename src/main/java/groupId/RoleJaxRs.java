@@ -4,9 +4,7 @@ package groupId;
 import com.google.gson.Gson;
 import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 import jdbc.RolesJdbc;
-import jdbc.UserJdbc;
 import model.Role;
-import model.User;
 import utils.request.*;
 import utils.response.mainResponse;
 
@@ -35,7 +33,7 @@ public class RoleJaxRs {
         mainResponse.isSuccess = true;
         mainResponse.body = RolesJdbc.getRoles(selectSQL);
 
-        return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).build();
+        return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*").build();
     }
 
     @POST
@@ -57,7 +55,7 @@ public class RoleJaxRs {
             return Response.notAcceptable(null).build();
         }
 
-        return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).build();
+        return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*").build();
     }
 
     @DELETE
@@ -75,7 +73,7 @@ public class RoleJaxRs {
             return Response.notAcceptable(null).build();
         }
 
-        return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).build();
+        return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*").build();
     }
 
     @PUT
@@ -98,6 +96,6 @@ public class RoleJaxRs {
             return Response.notAcceptable(null).build();
         }
 
-        return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).build();
+        return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*").build();
     }
 }

@@ -36,7 +36,7 @@ public class UserJaxRs {
         mainResponse.isSuccess = true;
         mainResponse.body = UserJdbc.getUsers(selectSQL);
 
-        return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).build();
+        return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*").build();
     }
 
     @POST
@@ -60,7 +60,7 @@ public class UserJaxRs {
             return Response.notAcceptable(null).build();
         }
 
-        return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).build();
+        return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*").build();
     }
 
     @DELETE
@@ -78,7 +78,7 @@ public class UserJaxRs {
             return Response.notAcceptable(null).build();
         }
 
-        return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).build();
+        return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*").build();
     }
 
     @PUT
@@ -102,6 +102,6 @@ public class UserJaxRs {
             return Response.notAcceptable(null).build();
         }
 
-        return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).build();
+        return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*").build();
     }
 }
