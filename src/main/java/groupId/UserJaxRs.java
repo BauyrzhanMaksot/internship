@@ -42,9 +42,9 @@ public class UserJaxRs {
     @POST
     @Path("add")
     @Produces("application/json")
-    public Response addUser(String body) throws MessagingException {
-        mainResponse mainResponse = new mainResponse();
+    public Response addUser(String body) {
 
+        mainResponse mainResponse = new mainResponse();
         Gson gson = new Gson();
         addUserRequest addUserRequest = gson.fromJson(body, addUserRequest.class);
 
@@ -54,28 +54,31 @@ public class UserJaxRs {
 
 
         if (UserJdbc.addUser(user)) {
-                mainResponse.body="completed";
-                mainResponse.isSuccess=true;
+            mainResponse.body = "completed";
+            mainResponse.isSuccess = true;
         } else {
-            return Response.notAcceptable(null).build();
+            return Response.notAcceptable(null).header("Access-Control-Allow-Origin", "*").build();
         }
 
         return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*").build();
     }
 
-    @DELETE
+
+    @POST
     @Path("delete")
     @Produces("application/json")
     public Response deleteUser(String body) throws MessagingException {
         mainResponse mainResponse = new mainResponse();
 
         Gson gson = new Gson();
+//        String body = "";
+        System.out.println(body);
         deleteUserRequest deleteUserRequest = gson.fromJson(body, deleteUserRequest.class);
         if (UserJdbc.deleteUser(deleteUserRequest.id)) {
-            mainResponse.body="completed";
-            mainResponse.isSuccess=true;
+            mainResponse.body = "completed";
+            mainResponse.isSuccess = true;
         } else {
-            return Response.notAcceptable(null).build();
+            return Response.notAcceptable(null).header("Access-Control-Allow-Origin", "*").build();
         }
 
         return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*").build();
@@ -96,10 +99,10 @@ public class UserJaxRs {
         user.contactNumber = updateUserRequest.contactNumber;
 
         if (UserJdbc.updateUser(user)) {
-            mainResponse.body="completed";
-            mainResponse.isSuccess=true;
+            mainResponse.body = "completed";
+            mainResponse.isSuccess = true;
         } else {
-            return Response.notAcceptable(null).build();
+            return Response.notAcceptable(null).header("Access-Control-Allow-Origin", "*").build();
         }
 
         return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*").build();

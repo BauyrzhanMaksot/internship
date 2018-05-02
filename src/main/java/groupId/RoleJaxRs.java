@@ -52,7 +52,7 @@ public class RoleJaxRs {
             mainResponse.body="completed";
             mainResponse.isSuccess=true;
         } else {
-            return Response.notAcceptable(null).build();
+            return Response.notAcceptable(null).header("Access-Control-Allow-Origin", "*").build();
         }
 
         return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*").build();
@@ -70,7 +70,7 @@ public class RoleJaxRs {
             mainResponse.body="completed";
             mainResponse.isSuccess=true;
         } else {
-            return Response.notAcceptable(null).build();
+            return Response.notAcceptable(null).header("Access-Control-Allow-Origin", "*").build();
         }
 
         return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*").build();
@@ -93,7 +93,7 @@ public class RoleJaxRs {
             mainResponse.body="completed";
             mainResponse.isSuccess=true;
         } else {
-            return Response.notAcceptable(null).build();
+            return Response.notAcceptable(null).header("Access-Control-Allow-Origin", "*").build();
         }
 
         return Response.ok(gson.toJson(mainResponse), MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*").build();
